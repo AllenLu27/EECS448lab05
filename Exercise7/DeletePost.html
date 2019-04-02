@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DeletePosts</title>
+  </head>
+  <body>
+    <?php
+    $mysqli = new mysqli("mysql.eecs.ku.edu", "a500l206", "Waix9eez", "a500l206");
+
+    if ($mysqli->connect_errno)
+    {
+      printf("Connect failed: %s\n", $mysqli->connect_error);
+      exit();
+    }
+    echo '<style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                    }
+
+                    tr:nth-child(odd) {
+                      background-color: #dddddd;
+                        }
+            </style>';
+    $query = "SELECT post_id,content,author_id FROM Posts";
+    if ($result = $mysqli->query($query))
+    {
+      echo '<form action="DeletePost.php" method="post">';
+      echo '<table>';
+      echo '<tr><th colspan="3">Below are all the user\'s posts</th></tr>';
+      echo '<tr><th>Posts</th><th>Username</th><th>Delete</th></tr>';
+      while ($row = $result->fetch_assoc())
+      {
+          $temp0=$row["post_id"];
+	        $temp=$row["content"];
+          $temp1=$row["author_id"];
+          echo '<tr><td>' .$temp. '</td><td>' .$temp1. '</td>';
+          echo '<td><input type="checkbox" name="post[]" value="' .$temp0. '"></td></tr>';
+      }
+      $result->free();
+      echo '</table><br>';
+      echo '<input type="submit" value="Submit">';
+      echo '</form>';
+      $mysqli->close();
+    }
+    ?>
+  </body>
+</html>
