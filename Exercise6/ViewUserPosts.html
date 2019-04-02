@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ViewUserPosts</title>
+  </head>
+  <body>
+    <?php
+    $mysqli = new mysqli("mysql.eecs.ku.edu", "a500l206", "Waix9eez", "a500l206");
+
+    if ($mysqli->connect_errno)
+    {
+      printf("Connect failed: %s\n", $mysqli->connect_error);
+      exit();
+    }
+    $query = "SELECT user_id FROM Users";
+    if ($result = $mysqli->query($query))
+    {
+      echo '<form action="ViewUserPosts.php" method="post">';
+      echo '<select name="username" id="username">';
+      while ($row = $result->fetch_assoc())
+      {
+	        $temp=$row["user_id"];
+          echo '<option value="' .$temp. '">';
+          echo $temp . '</option>';
+
+      }
+      $result->free();
+      echo '</select>';
+      echo '<input type="submit" value="Submit">';
+      echo '</form>';
+      $mysqli->close();
+    }
+    ?>
+  </body>
+</html>
