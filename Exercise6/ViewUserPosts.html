@@ -14,6 +14,7 @@
       exit();
     }
     $query = "SELECT user_id FROM Users";
+    echo '<p>Select a user to view this user\'s post</p>';
     if ($result = $mysqli->query($query))
     {
       echo '<form action="ViewUserPosts.php" method="post">';
